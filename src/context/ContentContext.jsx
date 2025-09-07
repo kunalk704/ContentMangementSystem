@@ -1,0 +1,43 @@
+import { createContext, useContext, useState } from "react";
+
+const ContentContext = createContext();
+
+export default function ContentProvider({ children }) {
+  const [data, setData] = useState([]);
+
+  const addContent = (content) => {
+    setData((prev) => [...prev, { ...content, comment: [] }]);
+  };
+
+  const editContent = (updatedContent) => {
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === updatedContent.id
+          ? { ...updatedContent, comment: item.comment }
+          : item
+      )
+    );
+  };
+
+  const deleteContent = (id) => {
+    setData((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const addComment = (id, comment) => {
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === comment.id ? item.comment.push(comment) : item
+      )
+    );
+  };
+
+  return (
+    <ContentContext.Provider
+      value={{ data, addContent, editContent, deleteContent, addComment }}
+    >
+      {children}
+    </ContentContext.Provider>
+  );
+}
+
+export const useContent = () => useContext(ContentContext);

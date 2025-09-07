@@ -1,0 +1,85 @@
+/* Global Style */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #f4f6f8;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar Style */
+.sidebar {
+  background-color: #343a40;
+  color: white;
+  width: 250px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.sidebar h2 {
+  margin-top: 0;
+}
+.sidebar nav ul li {
+  margin: 15px 0;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+.sidebar nav ul li a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.logout-section {
+  margin-top: 20px;
+}
+
+/* Main content style */
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+
+  overflow-y: auto;
+  background-color: #f8f9f6;
+}
+
+/* Panel Style  */
+.panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Form Style */
+.content-form .form-group {
+  margin-bottom: 15px;
+}
+
+.content-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.content-form input,
+.content-form textarea,
+.content-form select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.content-form textarea {
+  resize: vertical;
+  height: 100px;
+}

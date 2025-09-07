@@ -1,5 +1,3 @@
-import React from "react";
-
-export default function AddContent() {
+export default function EditContent() {
   return <div>edit content</div>;
 }
