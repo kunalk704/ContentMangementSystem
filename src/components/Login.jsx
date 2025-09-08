@@ -49,7 +49,7 @@ export default function Login() {
             type="password"
             placeholder="Enter password"
             value={password}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         {error && <div className="error">{error}</div>}
