@@ -17,6 +17,9 @@ export default function Sidebar() {
           {user ? (
             <>
               <li>
+                <NavLink to="/add">Add Content</NavLink>
+              </li>
+              <li>
                 <NavLink to="/view">View Content</NavLink>
               </li>
             </>

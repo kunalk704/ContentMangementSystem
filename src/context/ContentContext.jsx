@@ -23,10 +23,15 @@ export default function ContentProvider({ children }) {
     setData((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const addComment = (id, comment) => {
+  const addComment = (contentId, comment) => {
     setData((prev) =>
       prev.map((item) =>
-        item.id === comment.id ? item.comment.push(comment) : item
+        item.id === contentId
+          ? {
+              ...item,
+              comments: [...(item.comments || []), comment],
+            }
+          : item
       )
     );
   };

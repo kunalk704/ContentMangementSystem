@@ -83,3 +83,108 @@ body {
   resize: vertical;
   height: 100px;
 }
+
+/* Button Style */
+.btn,
+.btn-delete,
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn:hover,
+.btn-edit:hover {
+  background-color: #0056b3;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+}
+.btn-delete:hover {
+  background-color: #a71d2a;
+}
+
+/* error message style */
+.error {
+  color: red;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* controls style */
+.controls {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* content list*/
+
+/* preview style */
+.preview {
+  border-top: 1px;
+  padding-top: 15px;
+  margin-top: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+/* comment section */
+.comments-section {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.comments-section h4 {
+  margin-top: 0;
+}
+
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.comment-item {
+  border-bottom: 1px dashed #ccc;
+  padding: 8px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* login panel style*/
+.login-panel {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* signup panel style */
+.signup-panel {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
