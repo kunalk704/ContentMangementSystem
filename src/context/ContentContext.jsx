@@ -1,19 +1,28 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const ContentContext = createContext();
 
 export default function ContentProvider({ children }) {
-  const [data, setData] = useState([]);
+  // Persist content
+  const [data, setData] = useState(() => {
+    const storedData = localStorage.getItem("contentData");
+    return storedData ? JSON.parse(storedData) : [];
+  });
+
+  // Save content whenever it changes
+  useEffect(() => {
+    localStorage.setItem("contentData", JSON.stringify(data));
+  }, [data]);
 
   const addContent = (content) => {
-    setData((prev) => [...prev, { ...content, comment: [] }]);
+    setData((prev) => [...prev, { ...content, comments: [] }]);
   };
 
   const editContent = (updatedContent) => {
     setData((prev) =>
       prev.map((item) =>
         item.id === updatedContent.id
-          ? { ...updatedContent, comment: item.comment }
+          ? { ...updatedContent, comments: item.comments || [] }
           : item
       )
     );
@@ -27,10 +36,7 @@ export default function ContentProvider({ children }) {
     setData((prev) =>
       prev.map((item) =>
         item.id === contentId
-          ? {
-              ...item,
-              comments: [...(item.comments || []), comment],
-            }
+          ? { ...item, comments: [...(item.comments || []), comment] }
           : item
       )
     );

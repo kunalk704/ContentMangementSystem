@@ -1,54 +1,60 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContent } from "../context/ContentContext";
-import { useEffect, useState } from "react";
-import { isNotEmpty } from "../utils/validation";
 import { useAuth } from "../context/AuthContext";
+import { isNotEmpty } from "../utils/validation";
 
 export default function AddContent() {
   const { addContent } = useContent();
-  const navigate = useNavigate();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [category, setCategory] = useState("Misc");
+  const [form, setForm] = useState({
+    title: "",
+    body: "",
+    category: "Misc",
+  });
   const [error, setError] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
+  // Load draft from localStorage
   useEffect(() => {
     const draft = localStorage.getItem("contentDraft");
     if (draft) {
       try {
-        const { title, body, category } = JSON.parse(draft);
-        setTitle(title || "");
-        setBody(body || "");
-        setCategory(category || "Misc");
-      } catch (error) {
-        console.error("Failed to parse draft:", error);
+        setForm(JSON.parse(draft));
+      } catch (err) {
+        console.error("Failed to parse draft:", err);
       }
     }
   }, []);
 
+  // Save draft on form change
+  useEffect(() => {
+    localStorage.setItem("contentDraft", JSON.stringify(form));
+  }, [form]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isNotEmpty(title) || !isNotEmpty(body)) {
+    if (!isNotEmpty(form.title) || !isNotEmpty(form.body)) {
       setError("Please fill all the fields");
       return;
     }
+
     const newContent = {
       id: Date.now(),
-      title,
-      body,
-      category,
+      ...form,
       date: new Date().toISOString(),
       author: user.username,
     };
+
     addContent(newContent);
-    setTitle("");
-    setBody("");
-    setCategory("Misc");
-    setError("");
-    localStorage.removeItem("contentDraft");
+    localStorage.removeItem("contentDraft"); // clear draft
     navigate("/view");
   };
 
@@ -56,60 +62,46 @@ export default function AddContent() {
     <div className="panel add-content-panel">
       <h2>Add New Content</h2>
       <form onSubmit={handleSubmit} className="content-form">
-        <div className="form-group">
-          <label htmlFor="title">Title:</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter title"
+          value={form.title}
+          onChange={handleChange}
+        />
+        <textarea
+          name="body"
+          placeholder="Enter body"
+          value={form.body}
+          onChange={handleChange}
+        />
+        <select name="category" value={form.category} onChange={handleChange}>
+          <option value="NEWS">NEWS</option>
+          <option value="BLOG">BLOG</option>
+          <option value="TUTORIAL">TUTORIAL</option>
+          <option value="Misc">Misc</option>
+        </select>
+
+        <label>
           <input
-            id="title"
-            type="text"
-            placeholder="Enter title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            type="checkbox"
+            checked={showPreview}
+            onChange={() => setShowPreview((prev) => !prev)}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="body">Body:</label>
-          <textarea
-            id="body"
-            placeholder="Enter body"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="category">Category:</label>
-          <select
-            id="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="NEWS"> NEWS</option>
-            <option value="BLOG">BLOG</option>
-            <option value="TUTORIAL">TUTORIAL</option>
-            <option value="Misc">Misc</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label>
-            <input
-              className="check-box"
-              type="checkbox"
-              checked={showPreview}
-              onChange={() => setShowPreview((prev) => !prev)}
-            />
-            Show Preview
-          </label>
-        </div>
+          Show Preview
+        </label>
+
         {error && <div className="error">{error}</div>}
-        <button type="submit" className="btn">
-          Add Content
-        </button>
+
+        <button type="submit">Add Content</button>
       </form>
+
       {showPreview && (
         <div className="preview">
           <h3>Live Preview</h3>
-          <h4>{title || "Title"}</h4>
-          <p>{body || "Body content will appear here..."}</p>
-          <small>Category: {category}</small>
+          <h4>{form.title || "Title"}</h4>
+          <p>{form.body || "Body content will appear here..."}</p>
+          <small>Category: {form.category}</small>
         </div>
       )}
     </div>

@@ -4,37 +4,40 @@ import { useAuth } from "../context/AuthContext";
 export default function Sidebar() {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
+
   const handleLogout = () => {
     logOut();
     navigate("/login");
   };
 
+  const navItems = user
+    ? [
+        { path: "/add", label: "Add Content" },
+        { path: "/view", label: "View Content" },
+      ]
+    : [
+        { path: "/login", label: "Login" },
+        { path: "/signup", label: "Sign Up" },
+      ];
+
   return (
     <aside className="sidebar">
-      <h2>CMS Portal </h2>
+      <h2>CMS Portal</h2>
       <nav>
         <ul>
-          {user ? (
-            <>
-              <li>
-                <NavLink to="/add">Add Content</NavLink>
-              </li>
-              <li>
-                <NavLink to="/view">View Content</NavLink>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <NavLink to="/login">Login</NavLink>
-              </li>
-              <li>
-                <NavLink to="/signup">Sign Up</NavLink>
-              </li>
-            </>
-          )}
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </nav>
+
       {user && (
         <div className="logout-section">
           <button onClick={handleLogout} className="logout-button">
