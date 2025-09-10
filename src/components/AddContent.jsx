@@ -91,6 +91,7 @@ export default function AddContent() {
         <div className="form-group">
           <label>
             <input
+              className="check-box"
               type="checkbox"
               checked={showPreview}
               onChange={() => setShowPreview((prev) => !prev)}

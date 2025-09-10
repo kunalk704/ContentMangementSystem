@@ -123,12 +123,45 @@ body {
   flex-wrap: wrap;
   gap: 10px;
 }
+.search-bar input {
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.filter-sort label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.filter-sort select {
+  margin-left: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
 /* content list*/
+.content-list {
+  list-style: none;
+  padding: 0;
+}
+.content-item {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.content-actions {
+  display: flex;
+  gap: 12px;
+}
 
 /* preview style */
 .preview {
-  border-top: 1px;
+  border-top: 1px solid #ccc;
   padding-top: 15px;
   margin-top: 15px;
   background-color: #f9f9f9;
@@ -154,7 +187,7 @@ body {
 
 .comment-item {
   border-bottom: 1px dashed #ccc;
-  padding: 8px;
+  padding: 8px 0;
 }
 
 .comment-form {
